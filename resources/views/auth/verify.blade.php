@@ -1,21 +1,21 @@
 <x-guest-layout>
     <div class="mb-4 text-sm text-gray-600">
-        {{ __('OTP code verification.') }}
+        {{ __('Please fill OTP code verification') }}
     </div>
 
-    <form method="POST" action="{{ route('password.confirm') }}">
+    <form method="POST" action="{{ route('verify.store') }}">
         @csrf
 
         <!-- Password -->
         <div>
-            <x-input-label for="password" :value="__('Code OTP')" />
+            <x-input-label for="code" :value="__('Code OTP')" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
+            <x-text-input id="code" class="block mt-1 w-full"
+                            type="text"
+                            name="code"
                             required autocomplete="current-password" />
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            <x-input-error :messages="$errors->get('code')" class="mt-2" />
         </div>
 
         <div class="flex justify-end mt-4">
