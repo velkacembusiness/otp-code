@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use App\Models\User;
+use App\Notifications\TwoFactoryCode;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -49,9 +50,12 @@ class LoginRequest extends FormRequest
                 'email' => trans('auth.failed'),
             ]);
         }
-
+        //  Insert into database
         $user = User::where('email', $this->input('email'))->first();
         $user->generateCode();
+
+        // send email
+        $user->notify(new TwoFactoryCode());
 
         RateLimiter::clear($this->throttleKey());
     }
